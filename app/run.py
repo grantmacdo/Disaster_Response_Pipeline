@@ -10,7 +10,6 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-#from sklearn.externals import joblib
 import joblib
 from sqlalchemy import create_engine
 from wordcloud import WordCloud
@@ -50,11 +49,12 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # find total number of messages in each category
     message_cat_sum = df.drop(df.columns[[0, 1, 2, 3]], axis=1, inplace=False).sum(axis = 0).sort_values(ascending =False)[:10].reset_index()
     message_cat_sum_x = message_cat_sum['index']
     message_cat_sum_y = message_cat_sum[0]
     
-    #Graph two data extraction: word cloud
+    #Graph data extraction: word cloud
     text=' '.join(df.message.tolist())
     token=tokenize(text)
     all_token=' '.join(token)
@@ -109,6 +109,7 @@ def index():
        }   
    ]
     
+    # adding wordcloud
     graphs.append(wordcloud_fig)
     
 
