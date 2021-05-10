@@ -33,7 +33,6 @@ In the web app that is build with this training data one could enter any disaste
 - Model
   - train_classifier.py: Python script of ML pipeline.
   - ML Pipeline Preparation.ipynb: Step by step notebook version of train_classifier.
-  - model.pkl: Stored model by pickle library.
 - App
   - run.py: Python script to run web app
 
