@@ -38,6 +38,10 @@ import pickle
 import time
 
 def load_data(database_filepath):
+    ''' 
+    input : database path
+    output : X, Y to use in ML
+    '''
     engine = create_engine('sqlite:///{}'.format(database_filepath))
 
     #engine.table_names()
@@ -49,7 +53,11 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-        # normalize case and remove punctuation
+    '''
+    input:text
+    output: cleaned and tokenized list of the text
+    ''' 
+    # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     
     # tokenize text
@@ -74,6 +82,9 @@ def tokenize(text):
 
 
 def build_model():
+    '''
+    output: model
+    '''
     pipeline =  Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -91,6 +102,10 @@ def build_model():
     return model
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    output: prints f1 score, precision score and recall score for all categories. 
+    An overall accuracy is printed showing the proportion of correct predictions. 
+    '''
     y_pred = model.predict(X_test)
     
     accuracy=[]

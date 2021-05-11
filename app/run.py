@@ -19,6 +19,10 @@ from wordcloud import WordCloud
 app = Flask(__name__)
 
 def tokenize(text):
+    '''
+    input:text
+    output: cleaned and tokenized list of the text
+    ''' 
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -32,8 +36,7 @@ def tokenize(text):
 # load data
 engine = create_engine('sqlite:///../data/dis_res.db')
 df = pd.read_sql_table('InsertTableName', engine)
-#print(df.drop(df.columns[[0, 1, 2, 3]], axis=1, inplace=False).columns)
-#print(df.drop(df.columns[[0, 1, 2, 3, 4]], axis=1, inplace=False).sum(axis = 0).sort_values(ascending =False)[:10].reset_index())
+
 
 # load model
 model = joblib.load("../models/model.pkl")
@@ -43,7 +46,6 @@ model = joblib.load("../models/model.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
-    
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']

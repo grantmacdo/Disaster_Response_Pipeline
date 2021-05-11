@@ -4,6 +4,10 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    input: file paths of csv files
+    output: creates combined data frame csv files
+    '''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     
@@ -13,6 +17,10 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    '''
+    input: combined dataframe
+    output: cleaned dataframe
+    '''
     # create a dataframe of the 36 individual category columns
     categories_36 = df['categories'].str.split(';',expand=True)
     # select the first row of the categories dataframe
@@ -43,6 +51,9 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    '''
+    input: previously created df and file name for the database
+    '''
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('InsertTableName', engine, index=False, if_exists='replace')
     pass  
