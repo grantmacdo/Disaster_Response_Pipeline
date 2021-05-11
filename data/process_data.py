@@ -37,7 +37,9 @@ def clean_data(df):
         categories_36[column] = categories_36[column].str[-1]
         # convert column from string to numeric
         categories_36[column] = categories_36[column].astype(int)
-        
+    
+    #'related' column has some '2' values, replace with mode value (1)
+    categories_36.loc[(categories_36.related == 2), 'related'] = 1    
     # drop the original categories column from `df`
     df.drop(columns='categories', inplace = True)
     
